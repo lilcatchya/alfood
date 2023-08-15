@@ -3,18 +3,19 @@ import { useEffect, useState } from 'react';
 import IRestaurante from '../../../interfaces/IRestaurante';
 import axios from "axios"
 import { Link } from 'react-router-dom';
+import http from '../../../http';
 
 const AdministracaoRestaurantes = () => {
 
   const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([])
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/v2/restaurantes/')
+    http.get('v2/restaurantes/')
     .then(resposta => setRestaurantes(resposta.data))
   })
 
   const excluir = (restauranteAhSerExcluido: IRestaurante) => {
-    axios.delete(`http://localhost:8000/api/v2/restaurantes/${restauranteAhSerExcluido.id}/`)
+    http.delete(`v2/restaurantes/${restauranteAhSerExcluido.id}/`)
     .then(() => {
       const ListaRestaurantes = restaurantes.filter(restaurante => restaurante.id !== restauranteAhSerExcluido.id)
       setRestaurantes([ ...ListaRestaurantes ])

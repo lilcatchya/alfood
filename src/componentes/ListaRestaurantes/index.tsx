@@ -4,6 +4,7 @@ import style from './ListaRestaurantes.module.scss';
 import Restaurante from './Restaurante';
 import axios from 'axios';
 import { IPaginacao } from '../../interfaces/IPaginacao';
+import http from '../../http';
 
 const ListaRestaurantes = () => {
 
@@ -11,7 +12,7 @@ const ListaRestaurantes = () => {
   const [proximaPagina, setProximaPagina] = useState('')
 
   useEffect(() => {
-    axios.get<IPaginacao<IRestaurante>>('http://localhost:8000/api/v1/restaurantes/')
+    http.get<IPaginacao<IRestaurante>>('v1/restaurantes/')
       .then(resposta => {
         setRestaurantes(resposta.data.results)
         setProximaPagina(resposta.data.next)
