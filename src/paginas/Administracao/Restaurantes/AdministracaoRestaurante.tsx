@@ -5,23 +5,23 @@ import { Link } from 'react-router-dom';
 import http from '../../../http';
 
 export default function AdministracaoRestaurantes() {
-
+  
   const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([])
 
   useEffect(() => {
     http.get('v2/restaurantes/')
       .then(resposta => setRestaurantes(resposta.data))
   })
-
+  
   const excluir = (restauranteAhSerExcluido: IRestaurante) => {
     http.delete(`v2/restaurantes/${restauranteAhSerExcluido.id}/`)
-      .then(() => {
-        const ListaRestaurantes = restaurantes.filter(restaurante => restaurante.id !== restauranteAhSerExcluido.id)
+    .then(() => {
+      const ListaRestaurantes = restaurantes.filter(restaurante => restaurante.id !== restauranteAhSerExcluido.id)
         setRestaurantes([...ListaRestaurantes])
       })
-  }
+    }
 
-  return (
+    return (
     <TableContainer>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
