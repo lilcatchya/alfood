@@ -8,7 +8,7 @@ export default function FormularioPrato() {
 
   const [nomePrato, setNomePrato] = useState('')
   const [descricao, setDescricao] = useState('')
-  
+
   const [tag, setTag] = useState('')
   const [restaurante, setRestaurante] = useState('')
 
@@ -25,7 +25,7 @@ export default function FormularioPrato() {
   }, [])
 
   const selecionarArquivo = (evento: React.ChangeEvent<HTMLInputElement>) => {
-    if(evento.target.files?.length) {
+    if (evento.target.files?.length) {
       setImagem(evento.target.files[0])
     } else {
       setImagem(null)
@@ -35,6 +35,28 @@ export default function FormularioPrato() {
   const aoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
     evento.preventDefault()
 
+    const formData = new FormData()
+
+    formData.append('nome', nomePrato)
+    formData.append('descricao', descricao)
+
+    formData.append('tag', tag)
+    formData.append('restaurante', restaurante)
+
+    if (imagem) {
+      formData.append('imagem', imagem)
+    }
+
+    http.request({
+      url: 'v2/pratos/',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      data: formData
+    })
+      .then(() => alert('Prato cadastrado com suceesso'))
+      .catch(erro => console.log(erro))
   }
 
   return (
@@ -66,7 +88,7 @@ export default function FormularioPrato() {
               <InputLabel id='select-tag'>Tag</InputLabel>
               <Select labelId="select-tag" value={tag} onChange={evento => setTag(evento.target.value)}>
                 {tags.map(tag =>
-                  <MenuItem key={tag.id} value={tag.id}>
+                  <MenuItem key={tag.id} value={tag.value}>
                     {tag.value}
                   </MenuItem>)}
               </Select>
