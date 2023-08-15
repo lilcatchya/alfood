@@ -1,11 +1,10 @@
-import { TextField, Button, Typography, Box, Container, Paper } from "@mui/material"
+import { TextField, Button, Typography, Box, Container } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import IRestaurante from "../../../interfaces/IRestaurante"
 import http from "../../../http"
-import AdminNavBar from "../../../componentes/AdminNavBar"
 
-const FormularioRestaurante = () => {
+export default function FormularioRestaurante() {
 
   const parametros = useParams()
 
@@ -36,32 +35,23 @@ const FormularioRestaurante = () => {
   }
 
   return (
-    <>
-      <AdminNavBar />
-
-      <Box>
-        <Container maxWidth='lg' sx={{ mt: 1 }}>
-          <Paper sx={{ p: 2 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexGrow: 1 }}>
-              <Typography component="h1" variant="h6">Formulário de Restaurantes</Typography>
-              <Box component='form' sx={{ width: '100%' }} onSubmit={aoSubmeterForm}>
-                <TextField
-                  value={nomeRestaurante}
-                  onChange={evento => setNomeRestaurante(evento.target.value)}
-                  label="Nome do Restaurante"
-                  variant="outlined"
-                  fullWidth
-                  required
-                />
-                <Button type="submit" variant="contained">Salvar</Button>
-              </Box>
-            </Box>
-          </Paper>
-        </Container>
-      </Box>
-
-    </>
+    <Box>
+      <Container maxWidth='lg' sx={{ mt: 1 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexGrow: 1 }}>
+          <Typography component="h1" variant="h6">Formulário de Restaurantes</Typography>
+          <Box component='form' sx={{ width: '100%' }} onSubmit={aoSubmeterForm}>
+            <TextField
+              value={nomeRestaurante}
+              onChange={evento => setNomeRestaurante(evento.target.value)}
+              label="Nome do Restaurante"
+              variant="outlined"
+              fullWidth
+              required
+            />
+            <Button type="submit" variant="contained">Salvar</Button>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
   )
 }
-
-export default FormularioRestaurante

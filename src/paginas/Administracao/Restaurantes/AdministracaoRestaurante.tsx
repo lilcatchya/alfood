@@ -1,11 +1,10 @@
-import { Button, TableHead, TableRow, Paper, Table, TableBody, TableCell, TableContainer } from '@mui/material';
+import { Button, TableHead, TableRow, Table, TableBody, TableCell, TableContainer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import IRestaurante from '../../../interfaces/IRestaurante';
 import { Link } from 'react-router-dom';
 import http from '../../../http';
-import AdminNavBar from '../../../componentes/AdminNavBar';
 
-const AdministracaoRestaurantes = () => {
+export default function AdministracaoRestaurantes() {
 
   const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([])
 
@@ -23,53 +22,43 @@ const AdministracaoRestaurantes = () => {
   }
 
   return (
-
-    <>
-      <AdminNavBar />
-
-      <Paper sx={{ p: 2 }}>
-
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  Nome
-                </TableCell>
-                <TableCell>
-                  Editar
-                </TableCell>
-                <TableCell>
+    <TableContainer>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>
+              Nome
+            </TableCell>
+            <TableCell>
+              Editar
+            </TableCell>
+            <TableCell>
+              Excluir
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {restaurantes.map(restaurante =>
+            <TableRow key={restaurante.id}>
+              <TableCell>
+                {restaurante.nome}
+              </TableCell>
+              <TableCell>
+                <Button variant="outlined">
+                  <Link to={`/admin/restaurantes/${restaurante.id}`}>
+                    Editar
+                  </Link>
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button variant="outlined" color='error' onClick={() => excluir(restaurante)}>
                   Excluir
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {restaurantes.map(restaurante =>
-                <TableRow key={restaurante.id}>
-                  <TableCell>
-                    {restaurante.nome}
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="outlined">
-                      <Link to={`/admin/restaurantes/${restaurante.id}`}>
-                        Editar
-                      </Link>
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="outlined" color='error' onClick={() => excluir(restaurante)}>
-                      Excluir
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </>
+                </Button>
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
-
-export default AdministracaoRestaurantes
